@@ -1,8 +1,5 @@
 require 'dm-core'
 require 'dm-migrations'
-configure :development do
-	DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
-end
 class Song
 	include DataMapper::Resource
 	property :id, Serial
@@ -23,7 +20,7 @@ end
 
 get '/songs/new' do 
 	#only 'frank sinatra' can create new songs
-	halt(401, 'Not Authorized') unless session[:admin] 
+	halt(401, 'Not Authorized, log in to do this action') unless session[:admin] 
 	@song = Song.new
 	erb :new_song
 end
